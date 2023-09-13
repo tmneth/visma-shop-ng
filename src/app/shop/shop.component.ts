@@ -11,7 +11,8 @@ import { CommonModule } from '@angular/common';
   imports: [ProductComponent, CommonModule],
 })
 export class ShopComponent implements OnInit {
-  private readonly _shop = inject(ShopService);
+  constructor(private readonly _shop: ShopService) {}
+
   public products: Product[] = [];
 
   ngOnInit(): void {
