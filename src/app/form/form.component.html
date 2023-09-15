@@ -1,0 +1,22 @@
+<div class="max-w-5xl m-auto bg-red-200 flex gap-5">
+  <form
+    class="flex flex-col gap-1"
+    [formGroup]="productForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="flex flex-col">
+      <label for="first-name">Name: </label>
+      <input id="first-name" type="text" formControlName="name" />
+    </div>
+    <label for="price">Price: </label>
+    <input id="price" type="text" formControlName="price" />
+
+    <label for="imagePath">Image: </label>
+    <input id="imagePath" type="text" formControlName="imagePath" />
+    <button [disabled]="!productForm.valid">Submit</button>
+  </form>
+  <div class="w-64">
+    <app-product [product]="productForm.value"></app-product>
+  </div>
+</div>
+`
