@@ -6,7 +6,7 @@ export interface Product {
   description: string;
   price: number;
   discount: number | null;
-  imagePath: string;
+  imageUrl: string;
 }
 
 export interface ProductForm {
@@ -15,5 +15,5 @@ export interface ProductForm {
   description: FormControl<string | null>;
   price: FormControl<number | null>;
   discount: FormControl<number | null>;
-  imagePath: FormControl<string | null>;
+  imageUrl: FormControl<string | null>;
 }
