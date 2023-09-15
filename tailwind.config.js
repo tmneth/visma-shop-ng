@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "btn-sprite": "url('/assets/btn-sprite.svg')",
+      },
+    },
   },
   plugins: [],
 };
