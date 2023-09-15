@@ -10,7 +10,6 @@ export interface Product {
 }
 
 export interface ProductForm {
-  id: FormControl<number | null>;
   name: FormControl<string | null>;
   description: FormControl<string | null>;
   price: FormControl<number | null>;
