@@ -1,22 +1,174 @@
-<div class="max-w-5xl m-auto bg-red-200 flex gap-5">
+<div class="max-w-5xl m-auto flex gap-5 justify-center text-slate-700">
   <form
-    class="flex flex-col gap-1"
+    class="flex flex-col gap-5 w-96"
     [formGroup]="productForm"
     (ngSubmit)="onSubmit()"
   >
-    <div class="flex flex-col">
-      <label for="first-name">Name: </label>
-      <input id="first-name" type="text" formControlName="name" />
+    <h3 class="text-center font-bold text-xl">Add new product</h3>
+    <div class="flex flex-col gap-1">
+      <label for="name" class="after:content-['*'] after:text-red-500"
+        >Name:
+      </label>
+      <input
+        class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
+        id="name"
+        type="text"
+        formControlName="name"
+      />
+      <div
+        class="text-sm text-red-500"
+        *ngIf="
+          productFormControl.name.invalid && productFormControl.name.touched
+        "
+      >
+        <span
+          class="text-danger"
+          *ngIf="
+          productFormControl.name.errors?.['required']
+        "
+        >
+          Product name is required
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="
+          productFormControl.name.errors?.['minlength']
+        "
+        >
+          Name has to consist of at least 5 letters
+        </span>
+      </div>
     </div>
-    <label for="price">Price: </label>
-    <input id="price" type="text" formControlName="price" />
+    <div class="flex flex-col gap-1">
+      <label for="description">Description: </label>
+      <textarea
+        class="resize-none h-24 p-2 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
+        id="description"
+        type="text"
+        formControlName="description"
+      ></textarea>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="imag-url" class="after:content-['*'] after:text-red-500"
+        >Image (URL):
+      </label>
+      <input
+        class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
+        id="image-url"
+        type="text"
+        formControlName="imageUrl"
+      />
+    </div>
+    <div
+      class="text-sm text-red-500"
+      *ngIf="
+        productFormControl.imageUrl.invalid &&
+        productFormControl.imageUrl.touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="
+        productFormControl.imageUrl.errors?.['required']
+      "
+      >
+        Image URL is required
+      </span>
+      <span
+        class="text-danger"
+        *ngIf="
+        productFormControl.imageUrl.errors?.['invalidUrl']
+      "
+      >
+        Invalid URL
+      </span>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="price" class="after:content-['*'] after:text-red-500"
+        >Price:
+      </label>
+      <input
+        class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
+        id="price"
+        type="number"
+        formControlName="price"
+        [(ngModel)]="currentPrice"
+      />
+    </div>
+    <div
+      class="text-sm text-red-500"
+      *ngIf="
+        productFormControl.price.invalid && productFormControl.price.touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="
+        productFormControl.price.errors?.['required']
+      "
+      >
+        Price is required
+      </span>
+      <span
+        class="text-danger"
+        *ngIf="
+        productFormControl.price.errors?.['max']
+      "
+      >
+        Price should not exceed €500
+      </span>
+    </div>
+    <label for="discount" class="flex justify-between">
+      <span>Add discount to the product</span>
+      <input
+        type="checkbox"
+        id="discount"
+        [(ngModel)]="discountFieldIsDisplayed"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </label>
 
-    <label for="imagePath">Image: </label>
-    <input id="imagePath" type="text" formControlName="imagePath" />
-    <button [disabled]="!productForm.valid">Submit</button>
+    <div *ngIf="discountFieldIsDisplayed" class="flex flex-col gap-1">
+      <label for="discount" class="after:content-['*'] after:text-red-500"
+        >Discount:
+      </label>
+      <input
+        class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
+        id="discount"
+        type="number"
+        formControlName="discount"
+      />
+      <div
+        class="text-sm text-red-500"
+        *ngIf="
+          productFormControl.discount.invalid &&
+          productFormControl.discount.touched
+        "
+      >
+        <span
+          class="text-danger"
+          *ngIf="
+        productFormControl.discount.errors?.['required']
+      "
+        >
+          Discount is required
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="
+        productFormControl.discount.errors?.['max']
+      "
+        >
+          Discount should not exceed €500
+        </span>
+      </div>
+    </div>
+
+    <button
+      class="rounded-xl p-2 font-semibold text-slate-200 bg-green-800 hover:bg-green-700 cursor-pointer transition-colors disabled:cursor-not-allowed disabled:bg-green-700/80"
+      [disabled]="!productForm.valid"
+    >
+      Submit
+    </button>
   </form>
-  <div class="w-64">
-    <app-product [product]="productForm.value"></app-product>
-  </div>
 </div>
-`
