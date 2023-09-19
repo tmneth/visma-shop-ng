@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ProductComponent } from './product/product.component';
-import { ShopService } from './shop.service';
-import { Product } from '../shared/models/product.model';
+import { ShopService } from '../shared/data-services/services/shop.data.service';
+import { Product } from '../shared/data-services/models/product.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
