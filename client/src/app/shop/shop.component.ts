@@ -1,9 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ProductComponent } from './product/product.component';
 import { ShopService } from './shop.service';
 import { Product } from '../shared/models/product.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -11,14 +12,22 @@ import { RouterLink } from '@angular/router';
   templateUrl: './shop.component.html',
   imports: [ProductComponent, CommonModule, RouterLink],
 })
-export class ShopComponent implements OnInit {
+export class ShopComponent implements OnInit, OnDestroy {
   constructor(private readonly _shop: ShopService) {}
+
+  private productsSubscription: Subscription | undefined;
 
   public products: Product[] = [];
 
   ngOnInit(): void {
-    this._shop.getProducts().subscribe((data) => {
+    this.productsSubscription = this._shop.getProducts().subscribe((data) => {
       this.products = data.products;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.productsSubscription) {
+      this.productsSubscription.unsubscribe();
+    }
   }
 }
