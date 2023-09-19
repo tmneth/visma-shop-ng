@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use("/products", productsRoutes);
+app.use("/api/products", productsRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
