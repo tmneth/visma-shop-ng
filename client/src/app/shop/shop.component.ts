@@ -17,6 +17,8 @@ export class ShopComponent implements OnInit {
   public products: Product[] = [];
 
   ngOnInit(): void {
-    this.products = this._shop.getProducts();
+    this._shop.getProducts().subscribe((data) => {
+      this.products = data.products;
+    });
   }
 }
