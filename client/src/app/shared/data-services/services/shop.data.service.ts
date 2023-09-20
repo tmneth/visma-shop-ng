@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../models/product.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface ProductsApiResponse {
-  products: Product[];
-}
+import { ProductsApiResponse } from '../models/product.model';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',

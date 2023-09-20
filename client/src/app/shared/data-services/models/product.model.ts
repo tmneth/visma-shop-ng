@@ -16,3 +16,7 @@ export interface ProductForm {
   discount: FormControl<number | null>;
   imageUrl: FormControl<string | null>;
 }
+
+export interface ProductsApiResponse {
+  products: Product[];
+}
