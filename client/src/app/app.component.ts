@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShopComponent } from './shop/shop.component';
+import { ShopComponent } from './pages/shop/shop.component';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 

@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ProductComponent } from './product/product.component';
-import { ShopService } from '../shared/data-services/services/shop.data.service';
-import {
-  Product,
-  ProductsApiResponse,
-} from '../shared/data-services/models/product.model';
+import { ShopService } from '../../shared/data-services/services/shop.data.service';
+import { Product } from 'src/app/shared/data-services/models/product.view.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,23 +13,18 @@ import { Subscription } from 'rxjs';
   imports: [ProductComponent, CommonModule, RouterLink],
 })
 export class ShopComponent implements OnInit, OnDestroy {
-  constructor(private readonly _shop: ShopService) {}
+  constructor(private _shop: ShopService) {}
 
   private productsSubscription: Subscription | undefined;
 
-  public products: Product[] = [];
+  products: Product[] = [];
 
   ngOnInit(): void {
     this.productsSubscription = this._shop
       .getProducts()
-      .subscribe((data: ProductsApiResponse) => {
+      .subscribe({
+        next:(data) => {
         this.products = data.products;
-      });
-  }
+        })}
 
-  ngOnDestroy(): void {
-    if (this.productsSubscription) {
-      this.productsSubscription.unsubscribe();
-    }
-  }
 }

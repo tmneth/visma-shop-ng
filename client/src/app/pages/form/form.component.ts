@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -6,10 +6,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ProductForm } from '../shared/models/product.model';
+import {
+  Product,
+  ProductForm,
+} from '../shared/data-services/models/product.model';
 import { ProductComponent } from '../shop/product/product.component';
 import { CommonModule } from '@angular/common';
-import { urlValidator } from '../shared/validators/url.validator';
+import { urlValidator } from '../../shared/validators/url.validator';
+import { ShopService } from '../../shared/data-services/services/shop.data.service';
 
 @Component({
   standalone: true,
@@ -17,7 +21,9 @@ import { urlValidator } from '../shared/validators/url.validator';
   templateUrl: './form.component.html',
   imports: [ReactiveFormsModule, ProductComponent, FormsModule, CommonModule],
 })
-export class FormComponent implements OnInit {
+export class FormComponent {
+  constructor(private readonly _shop: ShopService) {}
+
   private _discountFieldIsDisplayed = false;
 
   get discountFieldIsDisplayed(): boolean {
@@ -45,12 +51,9 @@ export class FormComponent implements OnInit {
 
   currentPrice: number = 0;
 
-  productForm = new FormGroup<ProductForm>({
-    name: new FormControl<string>('', [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
-    description: new FormControl<string>('', Validators.required),
+  productForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    description: new FormControl('', Validators.required),
     price: new FormControl<number>(0, [
       Validators.required,
       Validators.max(500),
@@ -69,13 +72,29 @@ export class FormComponent implements OnInit {
     return this.productForm.controls;
   }
 
-  onSubmit() {
-    console.log(this.productForm.value);
+  formToProduct(form: FormGroup): Product {
+    return {
+      name: form.get('name')?.value ?? '',
+      description: form.get('description')?.value ?? '',
+      price: form.get('price')?.value ?? 0,
+      discount: form.get('discount')?.value ?? 0,
+      imageUrl: form.get('imageUrl')?.value ?? '',
+    };
   }
 
-  ngOnInit(): void {
-    console.log(this.discountFieldIsDisplayed);
-    console.log(this.productFormControl.name.errors);
-    console.log(this.productForm.value);
+  onSubmit() {
+    if (this.productForm.valid) {
+      const newProduct: Product = this.formToProduct(this.productForm);
+
+      this._shop.createProduct(newProduct).subscribe(
+        (response) => {
+          console.log('Product saved successfully', response);
+          this.productForm.reset();
+        },
+        (error) => {
+          console.error('Error saving product', error);
+        }
+      );
+    }
   }
 }
