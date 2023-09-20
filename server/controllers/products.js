@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid/non-secure";
 import { getJsonData, writeJsonData } from "../utils/helpers.js";
 
 export const getProducts = async (req, res) => {
