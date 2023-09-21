@@ -28,6 +28,11 @@
     <span class="text-slate-500">{{
       product.description | truncateString : 50
     }}</span>
-    <span>€ {{ product.price }}</span>
+    <div class="flex gap-2 font-semibold">
+      <span *ngIf="product.discount" class="line-through text-slate-500"
+        >€ {{ product.price + product.discount }}</span
+      >
+      <span>€ {{ product.price - product.discount }}</span>
+    </div>
   </div>
 </div>
