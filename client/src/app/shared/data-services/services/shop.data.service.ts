@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ProductsApiResponse } from '../models/product.model';
-import { Product } from '../models/product.model';
+import { Product, ProductsApiResponse } from '../models/product.view.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShopService {
-  constructor(private readonly _http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   private apiUrl = 'http://localhost:3000/api/products';
 
   public getProducts(): Observable<ProductsApiResponse> {
-    return this._http.get<ProductsApiResponse>(this.apiUrl);
+    return this.http.get<ProductsApiResponse>(this.apiUrl);
   }
 
-  public createProduct(productData: any): Observable<any> {
-    return this._http.post(this.apiUrl, productData);
+  public createProduct(productData: Product): Observable<any> {
+    return this.http.post(this.apiUrl, productData);
   }
 }

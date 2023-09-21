@@ -7,7 +7,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { Product } from 'src/app/shared/data-services/models/product.model';
+import { Product } from 'src/app/shared/data-services/models/product.view.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
