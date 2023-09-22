@@ -14,14 +14,14 @@ export const getProductById = async (productId) => {
 
 export const addProduct = async (product) => {
   const { rows } = await pool.query(
-    "INSERT INTO products (id, name, description, price, discount, imageUrl) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+    "INSERT INTO products (id, name, description, price, discount, imageurl) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
     [
       product.id,
       product.name,
       product.description,
       product.price,
       product.discount,
-      product.imageUrl,
+      product.imageurl,
     ]
   );
   return rows[0];
@@ -29,14 +29,14 @@ export const addProduct = async (product) => {
 
 export const updateProduct = async (productId, product) => {
   const { rows } = await pool.query(
-    "UPDATE products SET name = $2, description = $3, price = $4, discount = $5, imageUrl = $6 WHERE id = $1 RETURNING *",
+    "UPDATE products SET name = $2, description = $3, price = $4, discount = $5, imageurl = $6 WHERE id = $1 RETURNING *",
     [
       productId,
       product.name,
       product.description,
       product.price,
       product.discount,
-      product.imageUrl,
+      product.imageurl,
     ]
   );
   return rows[0];

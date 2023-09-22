@@ -28,7 +28,7 @@ export const getProduct = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
-  const { name, description, price, discount, imageUrl } = req.body;
+  const { name, description, price, discount, imageurl } = req.body;
   const id = nanoid(5);
   try {
     const newProduct = await db.addProduct({
@@ -37,7 +37,7 @@ export const createProduct = async (req, res) => {
       description,
       price,
       discount,
-      imageUrl,
+      imageurl,
     });
     res.status(201).json(newProduct);
   } catch (err) {
@@ -48,14 +48,14 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   const id = req.params.id;
-  const { name, description, price, discount, imageUrl } = req.body;
+  const { name, description, price, discount, imageurl } = req.body;
   try {
     const updatedProduct = await db.updateProduct(id, {
       name,
       description,
       price,
       discount,
-      imageUrl,
+      imageurl,
     });
     if (updatedProduct) {
       res.status(200).json(updatedProduct);

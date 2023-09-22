@@ -58,19 +58,19 @@
         class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
         id="image-url"
         type="text"
-        formControlName="imageUrl"
+        formControlName="imageurl"
       />
       <div
         class="text-sm text-red-500"
         *ngIf="
-          productFormControl.imageUrl.invalid &&
-          productFormControl.imageUrl.touched
+          productFormControl.imageurl.invalid &&
+          productFormControl.imageurl.touched
         "
       >
         <span
           class="text-danger"
           *ngIf="
-        productFormControl.imageUrl.errors?.['required']
+        productFormControl.imageurl.errors?.['required']
       "
         >
           Image URL is required
@@ -78,7 +78,7 @@
         <span
           class="text-danger"
           *ngIf="
-        productFormControl.imageUrl.errors?.['invalidUrl']
+        productFormControl.imageurl.errors?.['invalidUrl']
       "
         >
           Invalid URL
