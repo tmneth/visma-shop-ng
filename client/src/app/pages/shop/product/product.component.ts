@@ -9,12 +9,13 @@ import {
 } from '@angular/animations';
 import { Product } from 'src/app/shared/data-services/models/product.view.model';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-product',
   templateUrl: './product.component.html',
-  imports: [CommonModule, TruncateString],
+  imports: [CommonModule, TruncateString, RouterLink],
   animations: [
     trigger('showItemDetails', [
       state(

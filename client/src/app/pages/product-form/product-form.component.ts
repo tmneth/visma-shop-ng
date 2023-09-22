@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormBuilder,
@@ -14,7 +14,7 @@ import { ProductComponent } from '../shop/product/product.component';
 import { CommonModule } from '@angular/common';
 import { urlValidator } from '../../shared/validators/url.validator';
 import { ShopService } from '../../shared/data-services/services/shop.data.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -22,12 +22,16 @@ import { Router } from '@angular/router';
   templateUrl: './product-form.component.html',
   imports: [ReactiveFormsModule, ProductComponent, FormsModule, CommonModule],
 })
-export class ProductFormComponent {
+export class ProductFormComponent implements OnInit {
   constructor(
     private shop: ShopService,
     private fb: NonNullableFormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
+
+  isEditing: boolean = false;
+  productId?: string;
 
   private _discountFieldIsDisplayed = false;
 
@@ -72,6 +76,23 @@ export class ProductFormComponent {
     this.shop.createProduct(this.productForm.value as Product).subscribe({
       next: () => this.router.navigate(['/shop']),
       error: (err: Error) => console.error('Observer got an error: ' + err),
+    });
+  }
+
+  loadProductDetails(id: string) {
+    this.shop.getProduct(id).subscribe((product) => {
+      this.productForm.patchValue(product);
+    });
+  }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) {
+        this.isEditing = true;
+        this.productId = id;
+        this.loadProductDetails(this.productId);
+      }
     });
   }
 }

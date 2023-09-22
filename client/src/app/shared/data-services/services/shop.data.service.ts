@@ -18,4 +18,8 @@ export class ShopService {
   public createProduct(productData: Product): Observable<any> {
     return this.http.post(this.apiUrl, productData);
   }
+
+  public getProduct(productId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${productId}`);
+  }
 }

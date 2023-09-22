@@ -6,5 +6,6 @@ export const APP_ROUTES: Routes = [
   { path: 'shop', component: ShopComponent },
   { path: 'cart', component: ShopComponent },
   { path: 'form', component: ProductFormComponent },
+  { path: 'edit-product/:id', component: ProductFormComponent },
   { path: '**', redirectTo: 'shop' },
 ];
