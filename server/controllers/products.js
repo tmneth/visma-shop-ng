@@ -58,7 +58,34 @@ export const createProduct = async (req, res) => {
   }
 };
 
-export const updateProduct = async (req, res) => {};
+export const updateProduct = async (req, res) => {
+  const id = req.params.id;
+  const { name, description, price, discount, imageUrl } = req.body;
+
+  try {
+    const jsonData = await getJsonData();
+    const product = jsonData.products.find((p) => p.id === id);
+
+    if (product) {
+      if (name) product.name = name;
+      if (description) product.description = description;
+      if (price) product.price = price;
+      if (discount) product.discount = discount;
+      if (imageUrl) product.imageUrl = imageUrl;
+
+      await writeJsonData(jsonData);
+
+      res
+        .status(200)
+        .json({ message: "Product updated successfully", product });
+    } else {
+      res.status(404).json({ message: "Product not found!" });
+    }
+  } catch (err) {
+    console.error("Error updating product:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 export const deleteProduct = async (req, res) => {
   const id = req.params.id;

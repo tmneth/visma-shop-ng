@@ -73,10 +73,19 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.shop.createProduct(this.productForm.value as Product).subscribe({
-      next: () => this.router.navigate(['/shop']),
-      error: (err: Error) => console.error('Observer got an error: ' + err),
-    });
+    if (this.isEditing && this.productId) {
+      this.shop
+        .updateProduct(this.productId, this.productForm.value as Product)
+        .subscribe({
+          next: () => this.router.navigate(['/shop']),
+          error: (err: Error) => console.error('Observer got an error: ' + err),
+        });
+    } else {
+      this.shop.createProduct(this.productForm.value as Product).subscribe({
+        next: () => this.router.navigate(['/shop']),
+        error: (err: Error) => console.error('Observer got an error: ' + err),
+      });
+    }
   }
 
   loadProductDetails(id: string) {
