@@ -13,7 +13,7 @@ import { Product } from 'src/app/shared/data-services/models/product.view.model'
 import { ProductComponent } from '../shop/product/product.component';
 import { CommonModule } from '@angular/common';
 import { urlValidator } from '../../shared/validators/url.validator';
-import { ShopService } from '../../shared/data-services/services/shop.data.service';
+import { ShopDataService } from '../../shared/data-services/services/shop.data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
