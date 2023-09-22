@@ -15,8 +15,8 @@ export class ShopDataService {
     return this.http.get<Product[]>(this.apiUrl);
   }
 
-  public createProduct(productData: Product): Observable<Product[]> {
-    return this.http.post<Product[]>(this.apiUrl, productData);
+  public createProduct(productData: Product): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, productData);
   }
 
   public getProduct(productId: string): Observable<Product> {
