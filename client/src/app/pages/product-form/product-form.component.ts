@@ -91,6 +91,9 @@ export class ProductFormComponent implements OnInit {
   loadProductDetails(id: string) {
     this.shop.getProduct(id).subscribe((product) => {
       this.productForm.patchValue(product);
+      if (product.discount) {
+        this.discountFieldIsDisplayed = true;
+      }
     });
   }
 
