@@ -42,3 +42,5 @@ client/typings
 .DS_Store
 Thumbs.db
 
+# Environmental variables
+/**/.env
