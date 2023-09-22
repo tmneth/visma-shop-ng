@@ -13,6 +13,23 @@ export const getProducts = async (req, res) => {
   }
 };
 
+export const getProduct = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const jsonData = await getJsonData();
+    const product = jsonData.products.find((p) => p.id === id);
+
+    if (product) {
+      res.status(200).json(product);
+    } else {
+      res.status(404).json({ message: "Product not found!" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to read the products data" });
+  }
+};
+
 export const createProduct = async (req, res) => {
   try {
     const { name, description, price, discount, imageUrl } = req.body;
