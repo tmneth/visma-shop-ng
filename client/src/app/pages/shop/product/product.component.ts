@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
       state(
         'show',
         style({
-          'box-shadow': 'inset 0 70px 40px -40px rgba(0,0,0,.7)',
+          'box-shadow': 'inset 0 -70px 40px -40px rgba(0,0,0,.7)',
         })
       ),
       transition('void => show', [

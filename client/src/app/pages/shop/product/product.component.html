@@ -3,7 +3,13 @@
   (mouseover)="isHovering = true"
   (mouseleave)="isHovering = false"
 >
-  <div class="relative flex-col w-full rounded-xl">
+  <div
+    class="relative flex-col w-full rounded-xl"
+    [ngClass]="{
+      ' after:content-[\'SALE!\'] after:absolute after:top-0 after:right-0 after:bg-green-800 after:text-white after:py-1 after:px-3 after:rounded-tr-xl after:rounded-bl-xl after:font-semibold':
+        product.discount
+    }"
+  >
     <img
       class="rounded-xl w-full h-full"
       src="{{ product.imageUrl }}"
@@ -13,11 +19,13 @@
     <div
       *ngIf="isHovering"
       [@showItemDetails]="isHovering ? 'show' : null"
-      class="absolute z-10 w-full h-full p-3 rounded-tr-xl rounded-tl-xl top-0"
+      class="absolute z-10 w-full h-full rounded-xl bottom-0"
     >
-      <div class="flex">
-        <button class="text-slate-200 flex gap-2">
+      <div class="flex gap-3 absolute bottom-3 left-3 text-slate-200">
+        <button>
           <i class="fa-solid fa-cart-plus"></i>
+        </button>
+        <button>
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </div>
