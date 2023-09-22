@@ -18,7 +18,7 @@ import { Observable, of } from 'rxjs';
 export class ShopComponent implements OnInit {
   constructor(private shop: ShopService) {}
 
-  products$: Observable<ProductsApiResponse> = of({ products: [] });
+  products$!: Observable<Product[]>;
 
   ngOnInit(): void {
     this.products$ = this.shop.getProducts();

@@ -2,7 +2,7 @@
   class="max-w-5xl m-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 mb-20"
 >
   <app-product
-    *ngFor="let product of (products$ | async)?.products"
+    *ngFor="let product of products$ | async"
     [product]="product"
   ></app-product>
   <button
