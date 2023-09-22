@@ -22,4 +22,8 @@ export class ShopService {
   public getProduct(productId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${productId}`);
   }
+
+  public deleteProduct(productId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${productId}`);
+  }
 }

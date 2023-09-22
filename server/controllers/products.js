@@ -60,4 +60,22 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {};
 
-export const deleteProduct = async (req, res) => {};
+export const deleteProduct = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const jsonData = await getJsonData();
+    const index = jsonData.products.findIndex((p) => p.id === id);
+
+    if (index !== -1) {
+      jsonData.products.splice(index, 1);
+      writeJsonData(jsonData);
+      res.status(200).json({ message: "Product deleted successfully!" });
+    } else {
+      res.status(404).json({ message: "Product not found!" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete the product" });
+  }
+};

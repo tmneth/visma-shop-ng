@@ -85,6 +85,14 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+  onDeleteItem() {
+    if (this.productId)
+      this.shop.deleteProduct(this.productId).subscribe({
+        next: () => this.router.navigate(['/shop']),
+        error: (err: Error) => console.error('Observer got an error: ' + err),
+      });
+  }
+
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
