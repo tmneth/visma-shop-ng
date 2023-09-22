@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormControl,
-  FormBuilder,
-  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -24,7 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProductFormComponent implements OnInit {
   constructor(
-    private shop: ShopService,
+    private shop: ShopDataService,
     private fb: NonNullableFormBuilder,
     private router: Router,
     private route: ActivatedRoute
@@ -65,7 +62,7 @@ export class ProductFormComponent implements OnInit {
     description: [''],
     price: [0, [Validators.required, Validators.max(500)]],
     discount: [0, [Validators.required, Validators.max(500)]],
-    imageUrl: ['', [Validators.required, urlValidator()]],
+    imageurl: ['', [Validators.required, urlValidator()]],
   });
 
   get productFormControl() {
