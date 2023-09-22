@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductComponent } from './product/product.component';
 import { ShopService } from '../../shared/data-services/services/shop.data.service';
-import { Product } from 'src/app/shared/data-services/models/product.view.model';
+import {
+  Product,
+  ProductsApiResponse,
+} from 'src/app/shared/data-services/models/product.view.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -14,12 +18,9 @@ import { RouterLink } from '@angular/router';
 export class ShopComponent implements OnInit {
   constructor(private shop: ShopService) {}
 
-  products: Product[] = [];
+  products$: Observable<ProductsApiResponse> = of({ products: [] });
 
   ngOnInit(): void {
-    this.shop.getProducts().subscribe({
-      next: (data) => (this.products = data.products),
-      error: (err: Error) => console.error('Observer got an error: ' + err),
-    });
+    this.products$ = this.shop.getProducts();
   }
 }
