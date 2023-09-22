@@ -6,7 +6,3 @@ export interface Product {
   discount?: number;
   imageUrl: string;
 }
-
-export interface ProductsApiResponse {
-  products: Product[];
-}
