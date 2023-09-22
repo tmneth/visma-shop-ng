@@ -1,22 +1,43 @@
 <div class="max-w-5xl m-auto">
-  <div
-    class="bg-red-200 rounded-xl border-red-700 border-2 text-center text-lg font-semibold w-full p-3"
-    *ngIf="!(products$ | async)!.length"
-  >
-    No products found!
-  </div>
-  <div class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 mb-20">
-    <app-product
-      *ngFor="let product of products$ | async"
-      [product]="product"
-    ></app-product>
-    <button
-      routerLink="/add-product"
-      class="fixed invisible md:visible bottom-10 right-10 bg-slate-100 rounded-full p-3 bg-btn-sprite hover:bg-[center_bottom_200px] z-20"
+  <ng-container *ngIf="products$ | async as products; else loading">
+    <div
+      class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 mb-20"
+      *ngIf="products.length; else noProducts"
     >
-      <i
-        class="text-slate-600 w-10 h-10 fa-solid fa-plus fa-2x flex justify-center items-center"
-      ></i>
-    </button>
-  </div>
+      <app-product
+        *ngFor="let product of products"
+        [product]="product"
+      ></app-product>
+      <button
+        routerLink="/add-product"
+        class="fixed invisible md:visible bottom-10 right-10 bg-slate-100 rounded-full p-3 bg-btn-sprite hover:bg-[center_bottom_200px] z-20"
+      >
+        <i
+          class="text-slate-600 w-10 h-10 fa-solid fa-plus fa-2x flex justify-center items-center"
+        ></i>
+      </button>
+    </div>
+
+    <ng-template #noProducts>
+      <div
+        class="bg-red-200 rounded-xl border-red-700 border-2 text-center text-lg font-semibold w-full p-3"
+      >
+        No products found!
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="mb-6">
+      <app-loader></app-loader>
+    </div>
+  </ng-template>
+  <button
+    routerLink="/add-product"
+    class="fixed invisible md:visible bottom-10 right-10 bg-slate-100 rounded-full p-3 bg-btn-sprite hover:bg-[center_bottom_200px] z-20"
+  >
+    <i
+      class="text-slate-600 w-10 h-10 fa-solid fa-plus fa-2x flex justify-center items-center"
+    ></i>
+  </button>
 </div>

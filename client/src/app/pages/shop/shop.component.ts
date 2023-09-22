@@ -5,12 +5,13 @@ import { Product } from 'src/app/shared/data-services/models/product.view.model'
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
+import { LoaderComponent } from 'src/app/ui-components/loader/loader.component';
 
 @Component({
   standalone: true,
   selector: 'app-shop',
   templateUrl: './shop.component.html',
-  imports: [ProductComponent, CommonModule, RouterLink],
+  imports: [ProductComponent, CommonModule, RouterLink, LoaderComponent],
 })
 export class ShopComponent implements OnInit {
   constructor(private shop: ShopDataService) {}
