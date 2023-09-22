@@ -14,6 +14,7 @@ import { ProductComponent } from '../shop/product/product.component';
 import { CommonModule } from '@angular/common';
 import { urlValidator } from '../../shared/validators/url.validator';
 import { ShopService } from '../../shared/data-services/services/shop.data.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -22,7 +23,11 @@ import { ShopService } from '../../shared/data-services/services/shop.data.servi
   imports: [ReactiveFormsModule, ProductComponent, FormsModule, CommonModule],
 })
 export class ProductFormComponent {
-  constructor(private shop: ShopService, private fb: NonNullableFormBuilder) {}
+  constructor(
+    private shop: ShopService,
+    private fb: NonNullableFormBuilder,
+    private router: Router
+  ) {}
 
   private _discountFieldIsDisplayed = false;
 
@@ -64,10 +69,8 @@ export class ProductFormComponent {
   }
 
   onSubmit() {
-    console.log(this.productForm.value);
-
     this.shop.createProduct(this.productForm.value as Product).subscribe({
-      next: (data) => console.log(data),
+      next: () => this.router.navigate(['/shop']),
       error: (err: Error) => console.error('Observer got an error: ' + err),
     });
   }
