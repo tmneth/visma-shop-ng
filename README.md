@@ -1,27 +1,43 @@
-# VismaShopNg
+# Visma e-shop
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+A simple e-shop project created using Angular, Node, Express and PostgreSQL
 
-## Development server
+## Project Setup
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Navigate to the directory of choice and clone the project
 
-## Code scaffolding
+```
+git clone https://github.com/tmneth/visma-shop-ng.git
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Setting up the server
 
-## Build
+To configure the server run the following command from the root directory
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+cd server && npm install
+```
 
-## Running unit tests
+Create .env file and configure environmental variables as follows
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+PGUSER=<PGUSER>
+PGHOST=<PGHOST>
+PGPASSWORD=<PGPASSWORD>
+PGDATABASE=<PGDATABASE>
+PGPORT=<PGPORT>
+```
 
-## Running end-to-end tests
+Once all the dependencies were installed start the server
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+npm start
+```
 
-## Further help
+## Setting up the client
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To configure the client run the following command from the root directory
+
+```
+cd client && npm install
+```
