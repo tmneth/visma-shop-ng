@@ -18,11 +18,15 @@
       class="absolute z-10 w-full h-full rounded-xl bottom-0"
     >
       <div class="flex gap-3 absolute bottom-3 left-3 text-slate-200">
-        <button>
-          <i class="fa-solid fa-cart-plus"></i>
+        <button title="Add to cart">
+          <i
+            class="fa-solid fa-cart-plus hover:text-slate-400 transition-colors"
+          ></i>
         </button>
-        <button [routerLink]="['/edit-product', product.id]">
-          <i class="fa-regular fa-pen-to-square"></i>
+        <button [routerLink]="['/edit-product', product.id]" title="Edit">
+          <i
+            class="fa-regular fa-pen-to-square hover:text-slate-400 transition-colors"
+          ></i>
         </button>
       </div>
     </div>
