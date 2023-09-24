@@ -7,6 +7,14 @@ CREATE TABLE IF NOT EXISTS products (
     imageUrl VARCHAR(1000)
 );
 
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    token VARCHAR(500)
+);
+
+
 INSERT INTO products (id, name, description, price, discount, imageurl) VALUES
 ('cA6fU', 'Very very Cool black hoodie', 'Some description goes here', 15, 3, 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG9vZGllfGVufDB8fDB8fHww&w=1000&q=80'),
 ('7p3ad', 'Sports hoodiedsafsadfasdfasdfasdfasdfasdfadsf', 'Some description goes here', 13, 2, 'https://lovet.g.shopcadacdn.com/sites/files/lovet/images/products/202305/1000x1500/21may-r1-235.jpg'),

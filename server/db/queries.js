@@ -48,3 +48,32 @@ export const deleteProductById = async (productId) => {
   ]);
   return rowCount > 0;
 };
+
+export const createUser = async (email, hashedPassword) => {
+  const { rows } = await pool.query(
+    "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email",
+    [email, hashedPassword]
+  );
+  return rows[0];
+};
+
+export const findUserByEmail = async (email) => {
+  const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [
+    email,
+  ]);
+  return rows[0];
+};
+
+export const storeUserToken = async (token, userId) => {
+  await pool.query("UPDATE users SET token = $1 WHERE id = $2", [
+    token,
+    userId,
+  ]);
+};
+
+export const findUserById = async (userId) => {
+  const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [
+    userId,
+  ]);
+  return rows[0];
+};
