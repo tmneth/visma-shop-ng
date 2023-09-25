@@ -14,65 +14,21 @@
       {{ errorMessage }}
     </div>
 
-    <div class="flex flex-col gap-1">
-      <label for="email" class="after:content-['*'] after:text-red-500"
-        >Email:</label
-      >
-      <input
-        class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
-        id="email"
-        type="email"
-        formControlName="email"
-      />
-      <div
-        class="text-sm text-red-500"
-        *ngIf="authFormControl.email.invalid && authFormControl.email.touched"
-      >
-        <span
-          class="text-danger"
-          *ngIf="authFormControl.email.errors?.['required']"
-        >
-          Email is required
-        </span>
-        <span
-          class="text-danger"
-          *ngIf="authFormControl.email.errors?.['email']"
-        >
-          Please enter a valid email address
-        </span>
-      </div>
-    </div>
+    <app-input
+      [control]="authForm.controls.email"
+      inputId="email"
+      inputType="email"
+      label="Email"
+      [isRequired]="true"
+    />
 
-    <div class="flex flex-col gap-1">
-      <label for="password" class="after:content-['*'] after:text-red-500"
-        >Password:</label
-      >
-      <input
-        class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
-        id="password"
-        type="password"
-        formControlName="password"
-      />
-      <div
-        class="text-sm text-red-500"
-        *ngIf="
-          authFormControl.password.invalid && authFormControl.password.touched
-        "
-      >
-        <span
-          class="text-danger"
-          *ngIf="authFormControl.password.errors?.['required']"
-        >
-          Password is required
-        </span>
-        <span
-          class="text-danger"
-          *ngIf="authFormControl.password.errors?.['minlength']"
-        >
-          Password must be at least 10 characters long
-        </span>
-      </div>
-    </div>
+    <app-input
+      [control]="authForm.controls.password"
+      inputId="password"
+      inputType="password"
+      label="Password"
+      [isRequired]="true"
+    />
 
     <button
       class="rounded-xl p-2 font-semibold text-slate-200 bg-green-800 hover:bg-green-700 cursor-pointer transition-colors disabled:cursor-not-allowed disabled:bg-green-700/80"

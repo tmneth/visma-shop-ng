@@ -12,12 +12,19 @@ import { CommonModule } from '@angular/common';
 import { urlValidator } from '../../shared/validators/url.validator';
 import { ShopDataService } from '../../shared/data-services/services/shop.data.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InputComponent } from 'src/app/ui-components/input/input.component';
 
 @Component({
   standalone: true,
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
-  imports: [ReactiveFormsModule, ProductComponent, FormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    ProductComponent,
+    FormsModule,
+    CommonModule,
+    InputComponent,
+  ],
 })
 export class ProductFormComponent implements OnInit {
   constructor(
@@ -58,10 +65,10 @@ export class ProductFormComponent implements OnInit {
   currentPrice: number = 0;
 
   productForm = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(5)]],
+    name: ['', [Validators.required]],
     description: [''],
-    price: [0, [Validators.required, Validators.max(500)]],
-    discount: [0, [Validators.required, Validators.max(500)]],
+    price: [0, [Validators.required]],
+    discount: [0, [Validators.required]],
     imageurl: ['', [Validators.required, urlValidator()]],
   });
 

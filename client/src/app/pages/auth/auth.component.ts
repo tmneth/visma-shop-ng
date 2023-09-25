@@ -9,12 +9,13 @@ import {
 import { Router } from '@angular/router';
 import { User } from 'src/app/shared/data-services/models/user.view.model';
 import { AuthDataService } from 'src/app/shared/data-services/services/auth.data.service';
+import { InputComponent } from 'src/app/ui-components/input/input.component';
 
 @Component({
   standalone: true,
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputComponent],
 })
 export class AuthComponent {
   isLoginMode = true;
@@ -30,7 +31,7 @@ export class AuthComponent {
 
   authForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(10)]],
+    password: ['', [Validators.required]],
   });
 
   get authFormControl() {
