@@ -1,0 +1,93 @@
+<div class="max-w-5xl m-auto flex gap-5 justify-center text-slate-700 mb-20">
+  <form
+    class="flex flex-col gap-5 w-96"
+    [formGroup]="authForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <h3 class="text-center font-bold text-xl">
+      {{ isLoginMode ? "Sign in" : "Sign up" }}
+    </h3>
+    <div
+      class="bg-red-200 rounded-xl border-red-700 border-2 text-center text-lg font-semibold w-full p-3"
+      *ngIf="errorMessage"
+    >
+      {{ errorMessage }}
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="email" class="after:content-['*'] after:text-red-500"
+        >Email:</label
+      >
+      <input
+        class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
+        id="email"
+        type="email"
+        formControlName="email"
+      />
+      <div
+        class="text-sm text-red-500"
+        *ngIf="authFormControl.email.invalid && authFormControl.email.touched"
+      >
+        <span
+          class="text-danger"
+          *ngIf="authFormControl.email.errors?.['required']"
+        >
+          Email is required
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="authFormControl.email.errors?.['email']"
+        >
+          Please enter a valid email address
+        </span>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="password" class="after:content-['*'] after:text-red-500"
+        >Password:</label
+      >
+      <input
+        class="p-2 h-10 w-full border-2 rounded-md border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
+        id="password"
+        type="password"
+        formControlName="password"
+      />
+      <div
+        class="text-sm text-red-500"
+        *ngIf="
+          authFormControl.password.invalid && authFormControl.password.touched
+        "
+      >
+        <span
+          class="text-danger"
+          *ngIf="authFormControl.password.errors?.['required']"
+        >
+          Password is required
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="authFormControl.password.errors?.['minlength']"
+        >
+          Password must be at least 10 characters long
+        </span>
+      </div>
+    </div>
+
+    <button
+      class="rounded-xl p-2 font-semibold text-slate-200 bg-green-800 hover:bg-green-700 cursor-pointer transition-colors disabled:cursor-not-allowed disabled:bg-green-700/80"
+      (click)="onSubmit()"
+      [disabled]="!authForm.valid"
+    >
+      {{ isLoginMode ? "Sign in" : "Sign up" }}
+    </button>
+
+    <button
+      (click)="switchMode()"
+      type="button"
+      class="text-center underline text-blue-600"
+    >
+      I wish to {{ isLoginMode ? "sign up" : "sign in" }} instead
+    </button>
+  </form>
+</div>

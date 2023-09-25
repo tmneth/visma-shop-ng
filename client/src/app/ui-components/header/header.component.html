@@ -2,25 +2,41 @@
   <nav class="flex justify-between items-center m-auto max-w-5xl gap-4">
     <div class="w-full">
       <input
-        class="p-2 h-10 w-full border-b-2 rounded-none border-b-slate-100 focus:border-b-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
+        class="bg-white p-2 h-10 rounded-md w-full border-2 box-border border-slate-100 focus:border-slate-300 placeholder-slate-800 text-slate-800 font-medium outline-none transition-colors"
         type="text"
         placeholder="Dark hoodie..."
       />
     </div>
-    <div class="gap-4 sm:flex hidden">
+    <div class="sm:gap-4 sm:flex hidden">
       <button
-        class="w-16 text-slate-800 font-medium p-2 h-10 hover:font-bold"
-        routerLinkActive="!font-bold"
+        class="w-20 text-slate-800 bg-slate-100/80 rounded-md font-medium p-2 h-10 hover:bg-slate-200/80 transition-colors"
+        routerLinkActive="bg-slate-200/80"
         routerLink="/shop"
       >
         Shop
       </button>
       <button
-        class="w-16 text-slate-800 font-medium p-2 h-10 hover:font-bold"
-        routerLinkActive="!font-bold"
+        *ngIf="isAuthenticated"
+        class="w-20 text-slate-800 bg-slate-100/80 rounded-md font-medium p-2 h-10 hover:bg-slate-200/80 transition-colors"
+        routerLinkActive="bg-slate-200/80"
         routerLink="/cart"
       >
         Cart
+      </button>
+      <button
+        *ngIf="!isAuthenticated"
+        class="w-20 text-slate-800 bg-slate-100/80 rounded-md font-medium p-2 h-10 hover:bg-slate-200/80 whitespace-nowrap transition-colors"
+        routerLinkActive="bg-slate-200/80"
+        routerLink="/auth"
+      >
+        Sign in
+      </button>
+      <button
+        *ngIf="isAuthenticated"
+        class="w-20 text-slate-800 bg-slate-100/80 rounded-md font-medium p-2 h-10 hover:bg-slate-200/80 whitespace-nowrap transition-colors"
+        (click)="onLogout()"
+      >
+        Log out
       </button>
     </div>
     <div
@@ -34,6 +50,7 @@
         <i class="fa-solid fa-house fa-lg"></i>
       </button>
       <button
+        *ngIf="isAuthenticated"
         class="text-slate-800 font-medium"
         routerLinkActive="text-green-700"
         routerLink="/cart"
@@ -41,11 +58,27 @@
         <i class="fa-solid fa-cart-shopping fa-lg"></i>
       </button>
       <button
+        *ngIf="isAuthenticated"
         class="text-slate-800 font-medium"
         routerLinkActive="text-green-700"
         routerLink="/add-product"
       >
         <i class="fa-solid fa-plus fa-lg"></i>
+      </button>
+      <button
+        *ngIf="!isAuthenticated"
+        class="text-slate-800 font-medium"
+        routerLinkActive="text-green-700"
+        routerLink="/add-product"
+      >
+        <i class="fa-solid fa-arrow-right-to-bracket fa-lg"></i>
+      </button>
+      <button
+        *ngIf="isAuthenticated"
+        class="text-slate-800 font-medium"
+        (click)="onLogout()"
+      >
+        <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
       </button>
     </div>
   </nav>

@@ -7,8 +7,10 @@
       <app-product
         *ngFor="let product of products"
         [product]="product"
+        [isAuthenticated]="isAuthenticated"
       ></app-product>
       <button
+        *ngIf="isAuthenticated"
         routerLink="/add-product"
         class="fixed invisible md:visible bottom-10 right-10 bg-slate-100 rounded-full p-3 bg-btn-sprite hover:bg-[center_bottom_200px] z-20"
       >
@@ -32,12 +34,4 @@
       <app-loader></app-loader>
     </div>
   </ng-template>
-  <button
-    routerLink="/add-product"
-    class="fixed invisible md:visible bottom-10 right-10 bg-slate-100 rounded-full p-3 bg-btn-sprite hover:bg-[center_bottom_200px] z-20"
-  >
-    <i
-      class="text-slate-600 w-10 h-10 fa-solid fa-plus fa-2x flex justify-center items-center"
-    ></i>
-  </button>
 </div>

@@ -7,7 +7,6 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { Product } from 'src/app/shared/data-services/models/product.view.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -36,5 +35,6 @@ import { RouterLink } from '@angular/router';
 })
 export class ProductComponent {
   @Input() product: any;
+  @Input() isAuthenticated: boolean = false;
   isHovering: boolean = false;
 }

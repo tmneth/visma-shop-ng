@@ -6,14 +6,14 @@
   <div
     class="relative flex-col w-full rounded-xl"
     [ngClass]="{
-      ' after:content-[\'SALE!\'] after:absolute after:top-0 after:right-0 after:bg-green-800 after:text-white after:py-1 after:px-3 after:rounded-tr-xl after:rounded-bl-xl after:font-semibold':
+      'after:content-[\'SALE\']  after:absolute after:top-0 after:right-0 after:bg-green-800 after:text-white after:py-1 after:px-3 after:rounded-tr-xl after:rounded-bl-xl after:font-semibold':
         product.discount
     }"
   >
     <img class="rounded-xl w-full h-full" src="{{ product.imageurl }}" />
 
     <div
-      *ngIf="isHovering"
+      *ngIf="isHovering && isAuthenticated"
       [@showItemDetails]="isHovering ? 'show' : null"
       class="absolute z-10 w-full h-full rounded-xl bottom-0"
     >
