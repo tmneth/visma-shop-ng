@@ -5,10 +5,14 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
 
+import { provideToastr } from 'ngx-toastr';
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
     provideAnimations(),
     provideRouter(APP_ROUTES),
+    provideAnimations(),
+    provideToastr(),
   ],
 });
