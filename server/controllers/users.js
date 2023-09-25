@@ -4,7 +4,7 @@ import * as db from "../db/queries.js";
 
 const saltRounds = 10;
 
-export const signup = async (req, res) => {
+export const signUp = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -22,7 +22,7 @@ export const signup = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const signIn = async (req, res) => {
   try {
     const { email, password } = req.body;
 
