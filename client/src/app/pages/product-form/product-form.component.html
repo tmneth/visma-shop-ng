@@ -51,7 +51,7 @@
       ></textarea>
     </div>
     <div class="flex flex-col gap-1">
-      <label for="imag-url" class="after:content-['*'] after:text-red-500"
+      <label for="image-url" class="after:content-['*'] after:text-red-500"
         >Image (URL):
       </label>
       <input
@@ -122,11 +122,11 @@
       </div>
     </div>
 
-    <label for="discount" class="flex justify-between">
+    <label for="discount-state" class="flex justify-between">
       <span>Add discount to the product</span>
       <input
         type="checkbox"
-        id="discount"
+        id="discount-state"
         [(ngModel)]="discountFieldIsDisplayed"
         [ngModelOptions]="{ standalone: true }"
       />
