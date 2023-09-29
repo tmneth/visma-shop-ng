@@ -2,7 +2,7 @@ import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 export const urlValidator = (): ValidatorFn => {
   const urlRegex =
-    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+    /^http(s)?:\/\/[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value) {
       return null;
