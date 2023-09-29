@@ -9,6 +9,7 @@ import {
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Product } from 'src/app/shared/data-services/models/product.view.model';
 
 @Component({
   standalone: true,
@@ -34,7 +35,7 @@ import { RouterLink } from '@angular/router';
   ],
 })
 export class ProductComponent {
-  @Input() product: any;
+  @Input() product!: Product;
   @Input() isAuthenticated: boolean = false;
   isHovering: boolean = false;
 }
