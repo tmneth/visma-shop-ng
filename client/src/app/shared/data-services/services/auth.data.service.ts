@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../models/user.view.model';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthDataService {
-  constructor(private readonly http: HttpClient) {
+  constructor(
+    private readonly http: HttpClient,
+    private errorService: ErrorService
+  ) {
     const token = localStorage.getItem('token');
     this.authenticated.next(!!token);
   }
@@ -17,12 +21,7 @@ export class AuthDataService {
   isAuthenticated = this.authenticated.asObservable();
   private apiUrl = 'http://localhost:3000/api/auth';
 
-  private handleError(error: any) {
-    console.error(error);
-    return throwError(() => error);
-  }
-
-  public signup(user: User): Observable<any> {
+  signup(user: User): Observable<User> {
     return this.http.post(`${this.apiUrl}/signup`, user).pipe(
       tap((response: any) => {
         if (response && response.token) {
@@ -30,11 +29,11 @@ export class AuthDataService {
           this.authenticated.next(true);
         }
       }),
-      catchError(this.handleError)
+      catchError(this.errorService.handleError.bind(this.errorService))
     );
   }
 
-  public signin(user: User): Observable<any> {
+  signin(user: User): Observable<User> {
     return this.http.post(`${this.apiUrl}/signin`, user).pipe(
       tap((response: any) => {
         if (response && response.token) {
@@ -42,7 +41,7 @@ export class AuthDataService {
           this.authenticated.next(true);
         }
       }),
-      catchError(this.handleError)
+      catchError(this.errorService.handleError.bind(this.errorService))
     );
   }
 
