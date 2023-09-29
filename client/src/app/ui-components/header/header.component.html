@@ -44,7 +44,7 @@
     >
       <button
         class="text-slate-800 font-medium"
-        routerLinkActive="text-green-700"
+        routerLinkActive="!text-green-700"
         routerLink="/shop"
       >
         <i class="fa-solid fa-house fa-lg"></i>
@@ -52,7 +52,7 @@
       <button
         *ngIf="isAuthenticated"
         class="text-slate-800 font-medium"
-        routerLinkActive="text-green-700"
+        routerLinkActive="!text-green-700"
         routerLink="/cart"
       >
         <i class="fa-solid fa-cart-shopping fa-lg"></i>
@@ -60,7 +60,7 @@
       <button
         *ngIf="isAuthenticated"
         class="text-slate-800 font-medium"
-        routerLinkActive="text-green-700"
+        routerLinkActive="!text-green-700"
         routerLink="/add-product"
       >
         <i class="fa-solid fa-plus fa-lg"></i>
@@ -68,8 +68,8 @@
       <button
         *ngIf="!isAuthenticated"
         class="text-slate-800 font-medium"
-        routerLinkActive="text-green-700"
-        routerLink="/add-product"
+        routerLinkActive="!text-green-700"
+        routerLink="/auth"
       >
         <i class="fa-solid fa-arrow-right-to-bracket fa-lg"></i>
       </button>
