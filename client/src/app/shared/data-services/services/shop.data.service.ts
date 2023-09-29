@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; // Import HttpHeaders
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Product } from '../models/product.view.model';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShopDataService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private errorService: ErrorService
+  ) {}
 
   private apiUrl = 'http://localhost:3000/api/products';
 
@@ -20,34 +24,42 @@ export class ShopDataService {
     });
   }
 
-  public getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
+  getProducts(): Observable<Product[]> {
+    return this.http
+      .get<Product[]>(this.apiUrl)
+      .pipe(catchError(this.errorService.handleError.bind(this.errorService)));
   }
 
-  public createProduct(productData: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, productData, {
-      headers: this.getHeaders(),
-    });
+  createProduct(productData: Product): Observable<Product> {
+    return this.http
+      .post<Product>(this.apiUrl, productData, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.errorService.handleError.bind(this.errorService)));
   }
 
-  public getProduct(productId: string): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${productId}`);
+  getProduct(productId: string): Observable<Product> {
+    return this.http
+      .get<Product>(`${this.apiUrl}/${productId}`)
+      .pipe(catchError(this.errorService.handleError.bind(this.errorService)));
   }
 
-  public deleteProduct(productId: string): Observable<Product> {
-    return this.http.delete<Product>(`${this.apiUrl}/${productId}`, {
-      headers: this.getHeaders(),
-    });
+  deleteProduct(productId: string): Observable<Product> {
+    return this.http
+      .delete<Product>(`${this.apiUrl}/${productId}`, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.errorService.handleError.bind(this.errorService)));
   }
 
-  public updateProduct(
+  updateProduct(
     productId: string,
     updatedProduct: Product
   ): Observable<Product> {
-    return this.http.put<Product>(
-      `${this.apiUrl}/${productId}`,
-      updatedProduct,
-      { headers: this.getHeaders() }
-    );
+    return this.http
+      .put<Product>(`${this.apiUrl}/${productId}`, updatedProduct, {
+        headers: this.getHeaders(),
+      })
+      .pipe(catchError(this.errorService.handleError.bind(this.errorService)));
   }
 }
