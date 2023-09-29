@@ -7,12 +7,6 @@
     <h3 class="text-center font-bold text-xl">
       {{ isLoginMode ? "Sign in" : "Sign up" }}
     </h3>
-    <div
-      class="bg-red-200 rounded-xl border-red-700 border-2 text-center text-lg font-semibold w-full p-3"
-      *ngIf="errorMessage"
-    >
-      {{ errorMessage }}
-    </div>
 
     <app-input
       [control]="authForm.controls.email"
@@ -32,7 +26,6 @@
 
     <button
       class="rounded-xl p-2 font-semibold text-slate-200 bg-green-800 hover:bg-green-700 cursor-pointer transition-colors disabled:cursor-not-allowed disabled:bg-green-700/80"
-      (click)="onSubmit()"
       [disabled]="!authForm.valid"
     >
       {{ isLoginMode ? "Sign in" : "Sign up" }}
