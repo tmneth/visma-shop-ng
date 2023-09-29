@@ -4,7 +4,7 @@ import { ShopDataService } from '../../shared/data-services/services/shop.data.s
 import { Product } from 'src/app/shared/data-services/models/product.view.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LoaderComponent } from 'src/app/ui-components/loader/loader.component';
 import { AuthDataService } from 'src/app/shared/data-services/services/auth.data.service';
 
@@ -15,26 +15,20 @@ import { AuthDataService } from 'src/app/shared/data-services/services/auth.data
   imports: [ProductComponent, CommonModule, RouterLink, LoaderComponent],
 })
 export class ShopComponent implements OnInit {
+  products$!: Observable<Product[]>;
+  isAuthenticated: boolean = false;
+
   constructor(
     private shop: ShopDataService,
     private authService: AuthDataService
   ) {}
 
-  products$!: Observable<Product[]>;
-  isAuthenticated: boolean = false;
-  private authSub: any;
-
   ngOnInit(): void {
-    this.authSub = this.authService.isAuthenticated.subscribe(
-      (authenticated) => {
+    this.authService.isAuthenticated.subscribe({
+      next: (authenticated) => {
         this.isAuthenticated = authenticated;
-      }
-    );
-
-    this.products$ = this.shop.getProducts();
-  }
-
-  ngOnDestroy() {
-    this.authSub.unsubscribe();
+        this.products$ = this.shop.getProducts();
+      },
+    });
   }
 }
