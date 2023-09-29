@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
-  FormBuilder,
   Validators,
+  NonNullableFormBuilder,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/shared/data-services/models/user.view.model';
@@ -19,19 +19,21 @@ import { InputComponent } from 'src/app/ui-components/input/input.component';
 })
 export class AuthComponent {
   isLoginMode = true;
-  email = '';
-  password = '';
-  errorMessage: string | null = null;
+
+  defaultState: User = {
+    email: '',
+    password: '',
+  };
 
   constructor(
     private userService: AuthDataService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: NonNullableFormBuilder
   ) {}
 
   authForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
+    email: [this.defaultState.email, [Validators.required, Validators.email]],
+    password: [this.defaultState.password, [Validators.required]],
   });
 
   get authFormControl() {
@@ -39,25 +41,22 @@ export class AuthComponent {
   }
 
   onSubmit() {
-    const obs$ = this.isLoginMode
-      ? this.userService.signin(this.authForm.value as User)
-      : this.userService.signup(this.authForm.value as User);
+    const formValue: User = this.authForm.getRawValue();
 
-    obs$.subscribe({
-      next: (response: any) => {
-        localStorage.setItem('token', response.token);
-        this.errorMessage = null;
+    const auth$ = this.isLoginMode
+      ? this.userService.signin(formValue)
+      : this.userService.signup(formValue);
+
+    auth$.subscribe({
+      next: () => {
         this.router.navigate(['/shop']);
       },
-      error: (error: any) => {
-        this.errorMessage = error.error.message;
-        console.log(error);
-      },
     });
+    this.authForm.reset(this.defaultState);
   }
 
   switchMode() {
     this.isLoginMode = !this.isLoginMode;
-    this.authForm.reset();
+    this.authForm.reset(this.defaultState);
   }
 }

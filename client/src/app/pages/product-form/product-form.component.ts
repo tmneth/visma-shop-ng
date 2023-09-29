@@ -27,6 +27,18 @@ import { InputComponent } from 'src/app/ui-components/input/input.component';
   ],
 })
 export class ProductFormComponent implements OnInit {
+  isEditing: boolean = false;
+  productId?: string;
+  _discountFieldIsDisplayed = false;
+  currentPrice: number = 0;
+  defaultState: Product = {
+    name: '',
+    description: '',
+    price: 0,
+    discount: 0,
+    imageurl: '',
+  };
+
   constructor(
     private shop: ShopDataService,
     private fb: NonNullableFormBuilder,
@@ -34,10 +46,16 @@ export class ProductFormComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  isEditing: boolean = false;
-  productId?: string;
-
-  private _discountFieldIsDisplayed = false;
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) {
+        this.isEditing = true;
+        this.productId = id;
+        this.loadProductDetails(this.productId);
+      }
+    });
+  }
 
   get discountFieldIsDisplayed(): boolean {
     return this._discountFieldIsDisplayed;
@@ -62,42 +80,47 @@ export class ProductFormComponent implements OnInit {
     discountControl?.updateValueAndValidity();
   }
 
-  currentPrice: number = 0;
-
   productForm = this.fb.group({
-    name: ['', [Validators.required]],
-    description: [''],
-    price: [0, [Validators.required]],
-    discount: [0, [Validators.required]],
-    imageurl: ['', [Validators.required, urlValidator()]],
+    name: [this.defaultState.name, [Validators.required]],
+    description: [this.defaultState.description],
+    price: [this.defaultState.price, [Validators.required]],
+    discount: [this.defaultState.discount, [Validators.required]],
+    imageurl: [
+      this.defaultState.imageurl,
+      [Validators.required, urlValidator()],
+    ],
   });
 
   get productFormControl() {
     return this.productForm.controls;
   }
 
-  onSubmit() {
-    if (this.isEditing && this.productId) {
-      this.shop
-        .updateProduct(this.productId, this.productForm.value as Product)
-        .subscribe({
-          next: () => this.router.navigate(['/shop']),
-          error: (err: Error) => console.error('Observer got an error: ' + err),
-        });
-    } else {
-      this.shop.createProduct(this.productForm.value as Product).subscribe({
-        next: () => this.router.navigate(['/shop']),
-        error: (err: Error) => console.error('Observer got an error: ' + err),
-      });
-    }
+  getModelValues(): Product {
+    return this.productForm.getRawValue();
+  }
+
+  onSubmit(): void {
+    const productValue = this.getModelValues();
+
+    const obs$ =
+      this.isEditing && this.productId
+        ? this.shop.updateProduct(this.productId, productValue)
+        : this.shop.createProduct(productValue);
+
+    obs$.subscribe({
+      next: () => this.router.navigate(['/shop']),
+      error: (err: Error) => console.error('Observer got an error: ' + err),
+    });
   }
 
   loadProductDetails(id: string) {
     this.shop.getProduct(id).subscribe((product) => {
-      this.productForm.patchValue(product);
-      if (product.discount) {
-        this.discountFieldIsDisplayed = true;
-      }
+      next: () => {
+        this.productForm.patchValue(product);
+        if (product.discount) {
+          this.discountFieldIsDisplayed = true;
+        }
+      };
     });
   }
 
@@ -107,16 +130,5 @@ export class ProductFormComponent implements OnInit {
         next: () => this.router.navigate(['/shop']),
         error: (err: Error) => console.error('Observer got an error: ' + err),
       });
-  }
-
-  ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      if (id) {
-        this.isEditing = true;
-        this.productId = id;
-        this.loadProductDetails(this.productId);
-      }
-    });
   }
 }
